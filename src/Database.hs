@@ -114,7 +114,7 @@ updateBusinessById maybeIdBS businessJSON = do
     Nothing -> return (businessKeyId, Nothing)
     Just business -> do
       let businessUpdated -> do
-          let businessUpdated = Business {
+      let businessUpdated = Business {
 -- JSON might not have the updated value so store down a default value
 -- fromMaybe (defaultValue) (optimisticValue) >> Format for fromMaybe function
 businessName = fromMaybe (businessName business) (businessJSONName businessJSON)
@@ -128,4 +128,14 @@ withDbRun $ DbSql.update businessKeyId [
                                        ]
   return (businessKeyId, Just businessUpdated)
 
-  
+deleteBusinessById maybeIdBS = do
+  let businessIdKey = getBusinessIdKey maybeIdBS
+  -- Look up the business in the database
+  (businessKeyId, maybeBusiness) <- getBusinessById maybeIdBS
+  case maybeBusiness of
+    Nothing -> return (businessKeyId, Nothing)
+    -- Business?
+    Just business -> do
+      -- delete the business from the DB
+      withDbRun $ DbSql.delete businessKeyId
+      return (businessKeyId, Just business)
