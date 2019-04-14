@@ -55,4 +55,4 @@ share [mkPersist sqlSettings, mkSave "entityDefs"][persistLowerCase|
   -- "{\"email\": \"test@business.com\", \"name\": \"Test Business\"\}"
 
   instance ToJSON Business where
-toJSON (Business name email) = object ["name" .= name, "email" .= email]
+    toJSON (Business name email) = object ["name" .= name, "email" .= email]

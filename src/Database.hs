@@ -107,6 +107,7 @@ insertBusiness business = withDbRun $ DbSql.insert business
 
 
 -- Update the business info and store the updated copy
+
 updateBusinessById maybeIdBS businessJSON = do
   let businessIdKey = getBusinessIdKey maybeIdBS
   (businessKeyId, maybeBusiness) <- getBusinessById maybeIdBS
@@ -122,6 +123,7 @@ businessName = fromMaybe (businessName business) (businessJSONName businessJSON)
 }
 
 -- Update the business name and email in the database
+
 withDbRun $ DbSql.update businessKeyId [
   BusinessName =. businessName businessUpdated
   , BusinessEmail =. businessEmail businessUpdated
